@@ -1,13 +1,21 @@
 package jpabook.jpashop;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@Slf4j
 @SpringBootApplication
 public class JpashopApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpashopApplication.class, args);
+
+
+		Hello hello = new Hello();
+		hello.setData("Hello");
+		String data = hello.getData();
+		log.debug("data={}", data);
 	}
 
 }
