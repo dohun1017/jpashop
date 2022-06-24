@@ -23,14 +23,25 @@ public class Order {
      * 회원 1 : 주문 N
      *
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "order")
+    /**
+     * cascade
+     *
+     * persist(orderItemsA)
+     * persist(orderItemsB)
+     * persist(orderItemsC)
+     * persist(order)
+     * 를
+     * persist(order)
+     * 만 사용해도 같은 기능을 하게 해줌.
+     */
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
@@ -44,4 +55,20 @@ public class Order {
      * ORDER, CANCEL
      */
     private OrderStatus status;
+
+    //==연관관계 편의 메서드(양방향일때)==//
+    public void setMember(Member member) {
+        this.member = member;
+        member.getOrders().add(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
 }
