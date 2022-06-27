@@ -1,0 +1,25 @@
+spring:
+    #전부 없어도 됨(스프링부트가 자동으로 메모리로 설정함)
+#    datasource:
+#      url: jdbc:h2:mem:test
+#      username: sa
+#      password:
+#      driver-class-name: org.h2.Driver
+#
+#    jpa:
+#      hibernate:
+#        #애플리케이션 실행시점에 DB재생성
+#        ddl-auto: create-drop
+#      properties:
+#        hibernate:
+#          #System.out.print와 같음(show_sql)
+#          #show_sql: true
+#          format_sql: true
+    #전부 없어도 됨(스프링부트가 자동으로 메모리로 설정함)
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+    jpashop:
+      jpabook: debug
