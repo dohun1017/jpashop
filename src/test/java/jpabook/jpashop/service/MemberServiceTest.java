@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -53,11 +55,12 @@ class MemberServiceTest {
 
         //when
         memberService.join(member1);
-        try {
-
-        } catch (IllegalStateException e) {
-            return;
-        }
+        List<Member> members = memberService.findMembers();
+//        try {
+//           memberService.join(member2);
+//        } catch (IllegalStateException e) {
+//            return;
+//        }
 
         //then
         Exception thrown = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
