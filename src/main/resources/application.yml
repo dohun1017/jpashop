@@ -13,7 +13,7 @@ spring:
     jpa:
       hibernate:
         #애플리케이션 실행시점에 DB재생성
-        ddl-auto: none
+        ddl-auto: create
       properties:
         hibernate:
           #System.out
@@ -24,6 +24,6 @@ spring:
 logging:
   level:
     org.hibernate.SQL: debug
-    org.hibernate.type: trace
+#    org.hibernate.type: trace
     jpashop:
       jpabook: debug
