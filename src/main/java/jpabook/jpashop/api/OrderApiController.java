@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.*;
@@ -57,6 +58,33 @@ public class OrderApiController {
 
         return result;
     }
+
+    /**
+     * 1. ToOne 관계는 row 수 가 증가하지 않으므로 페치조인한다.
+     * 2. 컬렉션은 지연 로딩으로 조회한다.
+     * 3. 지연 로딩 성능 최적화를 위해 'hibernate.default_batch_fetch_size', @BatchSize 를 적용한다.
+     *      - 'hibernate.default_batch_fetch_size': 글로벌 설정
+     *      - @BatchSize: 개별 최적화 -
+     *          OneToMany - 속성 위에 적으면 됨
+     *          XToOne - 엔티티 위에 적으면 됨.
+     *      - 이 옵션을 사용하면 컬렉션이나, 프록시 객체를 한꺼번에 설정한 size 만큼 IN 쿼리로 조회한다.
+     *
+     * 페이징이 가능하다!!
+     */
+    @GetMapping("/api/v3.1/orders")
+    public List<OrderDto> ordersV3_page(
+            @RequestParam(value = "offset", defaultValue = "0") int offset,
+            @RequestParam(value = "limit", defaultValue = "100") int limit) {
+
+        List<Order> orders = orderRepository.findAllWithMemberDelivery(offset, limit);
+
+        List<OrderDto> result = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
 
     @Data
     static class OrderDto {
