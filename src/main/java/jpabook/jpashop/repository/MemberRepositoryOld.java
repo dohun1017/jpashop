@@ -4,14 +4,12 @@ import jpabook.jpashop.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class MemberRepository {
+public class MemberRepositoryOld {
 
     /**
      * 스프링부트가 JPA EntityManager를 자동으로 주입해줌.
